@@ -11,6 +11,7 @@
 #include <iostream>
 #include <limits>
 #include <utility>
+#include <vector>
 using namespace std;
 
 // Linux / Unix headers

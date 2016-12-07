@@ -1,39 +1,61 @@
 #include "headers.h"
 
 // select(S, k)
-pair<int, double> find_median(vector<double> varr) {
-  vector<double> left;
-  vector<double> right;
-  int k = varr.size()/2;
+projectNode find_median(vector<projectNode> varr) {
+  vector<projectNode> left;
+  vector<projectNode> right;
+  projectNode median;
+  int size =  varr.size();
+  int k = size/2;
+  int random = (size-1)*rand()/RAND_MAX;
 
+  for (int i = 0; i < size; i++) {
+    if (varr.at(i).length < varr.at(random).length) {
+      left.push_back(varr.at(i));
+    } else {
+      right.push_back(varr.at(i));
+    }
+  }
+
+  if (left.size()== k-1) {
+    median = varr.at(random);
+  } else if (left.size()>= k) {
+    median = find_median(left);
+  } else {
+    median = find_median(right);
+  }
+  return median;
 }
 
-candidate find_colsest(vector<double> varr) {
-    int size = varr.size()
-    if (size == 1)
-        return null;
+// find the closest pair in a certain projectVector
+candidate find_colsest(vector<projectNode> varr) {
+    int size = varr.size();
     candidate subCandidate;
-    if (size == 2) {
-        subCandidate.pointPair = make_pair(varr.at(0), varr.at(1));
-        subCandidate.length = abs(varr.at(0)-varr.at(1));
+    projectNode median = find_median(varr);
+    vector<projectNode> left, right;
+    candidate left_dis, right_dis, left_min;
+    if (size == 1) {
+        subCandidate.length = 100000;
         return subCandidate;
     }
-    pair<int, double> median = find_median(varr);
-    vector<double> left, right;
-    candidate left_dis, right_dis, left_min;
+    if (size == 2) {
+        subCandidate.pointPair = make_pair(varr.at(0).imageNum, varr.at(1).imageNum);
+        subCandidate.length = fabs(varr.at(0).length-varr.at(1).length);
+        return subCandidate;
+    }
     for (int i = 0; i < varr.size(); i++) {
-        if (varr.at(i) < median) {
-            left.push(varr.at(i));
+        if (varr.at(i).length < median.length) {
+            left.push_back(varr.at(i));
             if (left.size()== 1) {
-                left_min.length = varr.at(i)-median.second;
-                left_min.pointPair = make_pair(varr.at(i), median.first);
+                left_min.length = varr.at(i).length-median.length;
+                left_min.pointPair = make_pair(varr.at(i).imageNum, median.imageNum);
             }
-            if (left_min > varr.at(i)-median) {
-                left_min.length = varr.at(i)-median.second;
-                left_min.pointPair = make_pair(varr.at(i), median.first);
+            if (left_min.length > varr.at(i).length-median.length) {
+                left_min.length = varr.at(i).length-median.length;
+                left_min.pointPair = make_pair(varr.at(i).imageNum, median.imageNum);
             }
         } else {
-            right.push(varr.at(i));
+            right.push_back(varr.at(i));
         }
     }
 
@@ -49,13 +71,13 @@ candidate find_colsest(vector<double> varr) {
     }
 }
 
-pair<int, int> closest_pair(double (&projectVector)[100][60000] , int (*images)[784]) {
+candidate closest_pair(projectNode (*projectVector)[60000] , int (*images)[784]) {
     double min = 99999;
     candidate counter[100];
-    Pair tempCloest = new Pair();
+    Pair tempCloest;
     for (int i = 0; i < 100; i ++) {
-        vector<double> varr(projectVector[i], projectVector[i]+60000);
-        counter[i] = find_colsest(varr, 60000);
+        vector<projectNode> varr(projectVector[i], projectVector[i]+60000);
+        counter[i] = find_colsest(varr);
         // compute the Euclidean distance for i candidate
         int first = counter[i].pointPair.first;
         int second = counter[i].pointPair.second;
@@ -70,5 +92,8 @@ pair<int, int> closest_pair(double (&projectVector)[100][60000] , int (*images)[
             tempCloest = counter[i].pointPair;
         }
     }
-    return tempCloest;
+    candidate result;
+    result.pointPair = tempCloest;
+    result.length = min;
+    return result;
 }

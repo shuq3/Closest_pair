@@ -1,6 +1,9 @@
 #ifndef _PRE_PROCESSING_H_
 #define _PRE_PROCESSING_H_
 
+typedef pair<int, int> Pair;
+
+struct candidate {Pair pointPair; double length;};
 struct projectNode { int imageNum; double length; };
 
 void checkEndian();
@@ -10,6 +13,6 @@ void normalize(double* data, int count);
 void geneRandProjVects();
 void projection();
 
-void preProcessing();
+candidate preProcessing();
 
 #endif

@@ -1,10 +1,17 @@
 #include "headers.h"
 
 int main(int argc, char *argv[]) {
-    Pair cloest = new Pair();
-    cloest = preProcessing();
+    candidate closest;
+    Pair closest_pair;
+    closest = preProcessing();
+    closest_pair = closest.pointPair;
+
     cout << "The cloest Pair in this dateset is: ";
-    if (cloest.first > cloest.second) cout << cloest.second << " and " << cloest.first << endl;
-    else cout << cloest.first << " " << cloest.second << endl;
+    if (closest_pair.first > closest_pair.second) {
+      cout << closest_pair.second << " and " << closest_pair.first << endl;
+    } else {
+      cout << closest_pair.first << " and " << closest_pair.second << endl;
+    }
+    cout << "The distance between these two points is " << closest.length << endl;
 	return 0;
 }

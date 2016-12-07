@@ -3,7 +3,6 @@
 bool isLow;
 double rand_temp[100];
 
-
 void checkEndian() {
     short int test = 0x1234;
     if (*((char *)&test) == 0x12)
@@ -27,7 +26,7 @@ bool readFromDataset() {
     file = fopen("data/Mnist.ds", "rb");
     if (file == NULL)
         return 0;  // dataset is not open correctly
-    
+
     int *temp;
     temp = (int*)malloc(4);
     // magic number, number of images, number of rows, number of columns
@@ -43,7 +42,7 @@ bool readFromDataset() {
         }
         printf("%d]\n", *temp);
     }
-    
+
     printf("Reading images from dataset...\n");
     // 60,000 images, each has 784 bytes
     images = (int((*)[784]))malloc(60000 * 784 * sizeof(int));
@@ -94,7 +93,7 @@ void normalize(double* data, int count) {
     total = sqrt(total);
     for (int i= 0 ; i< count ; i++) {
         data[i] = data[i] / total;
-    } 
+    }
 }
 
 // generate random projection vectors 100*784
@@ -135,10 +134,10 @@ void projection() {
     // free(images);
 }
 
-pair<int, int> preProcessing() {
+candidate preProcessing() {
     clock_t start = clock();
     printf("==================== Pre-processing ====================\n");
-    if (readFroDataset() == 0) {
+    if (readFromDataset() == 0) {
         printf("Dataset is not open correctly\n");
         exit(1);
     }
@@ -148,7 +147,9 @@ pair<int, int> preProcessing() {
     double end = (double)(clock() - start) / (double)CLOCKS_PER_SEC;
     printf("\n[Pre-processing tie: %lf seconds]\n\n", end);
 
-    Pair cloest = new Pair();
-    cloest = closest_pair(projectVector, images);
-    return cloest;
+    start = clock();
+    printf("================= Finding Closest-pair =================\n");
+    candidate closest;
+    closest = closest_pair(projectVector, images);
+    return closest;
 }
