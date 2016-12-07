@@ -23,7 +23,7 @@ bool readFromDataset() {
     checkEndian();
     FILE *file;
     printf("Reading from dataset...\n");
-    file = fopen("data/Mnist.ds", "rb");
+    file = fopen("../data/Mnist.q", "rb");
     if (file == NULL)
         return 0;  // dataset is not open correctly
 
@@ -115,7 +115,6 @@ void geneRandProjVects() {
         }
     }
 }
-
 
 // project 60000 images to 100 vectors
 projectNode (*projectVector)[60000];

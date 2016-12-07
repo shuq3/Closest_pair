@@ -3,7 +3,7 @@
 
 typedef pair<int, int> Pair;
 
-struct candidate {Pair pointPair; double length;};
+struct candidate { Pair pointPair; double length; };
 struct projectNode { int imageNum; double length; };
 
 void checkEndian();

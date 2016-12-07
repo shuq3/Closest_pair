@@ -17,9 +17,9 @@ projectNode find_median(vector<projectNode> varr) {
     }
   }
 
-  if (left.size()== k-1) {
+  if (left.size() == k-1) {
     median = varr.at(random);
-  } else if (left.size()>= k) {
+  } else if (left.size() >= k) {
     median = find_median(left);
   } else {
     median = find_median(right);
@@ -28,7 +28,7 @@ projectNode find_median(vector<projectNode> varr) {
 }
 
 // find the closest pair in a certain projectVector
-candidate find_colsest(vector<projectNode> varr) {
+candidate find_closest(vector<projectNode> varr) {
     int size = varr.size();
     candidate subCandidate;
     projectNode median = find_median(varr);
@@ -59,8 +59,8 @@ candidate find_colsest(vector<projectNode> varr) {
         }
     }
 
-    left_dis = find_colsest(left);
-    right_dis = find_colsest(right);
+    left_dis = find_closest(left);
+    right_dis = find_closest(right);
 
     if (left_dis.length < right_dis.length) {
         if (left_dis.length > left_min.length) return left_min;
@@ -77,7 +77,7 @@ candidate closest_pair(projectNode (*projectVector)[60000] , int (*images)[784])
     Pair tempCloest;
     for (int i = 0; i < 100; i ++) {
         vector<projectNode> varr(projectVector[i], projectVector[i]+60000);
-        counter[i] = find_colsest(varr);
+        counter[i] = find_closest(varr);
         // compute the Euclidean distance for i candidate
         int first = counter[i].pointPair.first;
         int second = counter[i].pointPair.second;
