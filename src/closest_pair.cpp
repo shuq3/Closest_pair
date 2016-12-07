@@ -6,7 +6,8 @@ projectNode find_median(vector<projectNode> varr, int k) {
   vector<projectNode> right;
   projectNode median;
   int size =  varr.size();
-  int random = (size-1)*rand()/RAND_MAX;
+  if (size == 1) return varr.at(0);
+  int random = (rand() % (size-1));
 
   for (int i = 0; i < size; i++) {
     if (varr.at(i).length < varr.at(random).length) {
@@ -32,8 +33,7 @@ candidate find_closest(vector<projectNode> varr) {
     int size = varr.size();
     candidate subCandidate;
     if (size == 1) {
-        subCandidate.pointPair = make_pair(0, 0);
-        subCandidate.length = 100000;
+        subCandidate.length = INT_MAX;
         return subCandidate;
     }
     if (size == 2) {
@@ -48,11 +48,11 @@ candidate find_closest(vector<projectNode> varr) {
         if (varr.at(i).length < median.length) {
             left.push_back(varr.at(i));
             if (left.size() == 1) {
-                left_min.length = varr.at(i).length-median.length;
+                left_min.length = median.length-varr.at(i).length;
                 left_min.pointPair = make_pair(varr.at(i).imageNum, median.imageNum);
             }
-            if (left_min.length > varr.at(i).length-median.length) {
-                left_min.length = varr.at(i).length-median.length;
+            if (left_min.length > median.length- varr.at(i).length) {
+                left_min.length = median.length-varr.at(i).length;
                 left_min.pointPair = make_pair(varr.at(i).imageNum, median.imageNum);
             }
         } else {

@@ -8,4 +8,4 @@ processing.o : processing.cpp processing.h headers.h
 closest_pair.o : closest_pair.cpp closest_pair.h headers.h
 	g++ -c closest_pair.cpp
 clean :
-	rm edit main.o processing.o closest_pair.o
+	rm cp main.o processing.o closest_pair.o
