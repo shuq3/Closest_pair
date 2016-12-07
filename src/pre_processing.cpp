@@ -23,7 +23,7 @@ bool readFromDataset() {
     checkEndian();
     FILE *file;
     printf("Reading from dataset...\n");
-    file = fopen("../data/Mnist.q", "rb");
+    file = fopen("../data/Mnist.ds", "rb");
     if (file == NULL)
         return 0;  // dataset is not open correctly
 

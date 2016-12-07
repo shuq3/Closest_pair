@@ -1,18 +1,18 @@
 #include "headers.h"
 
 // select(S, k)
-projectNode find_median(vector<projectNode> varr) {
+projectNode find_median(vector<projectNode> varr, int k) {
   vector<projectNode> left;
   vector<projectNode> right;
   projectNode median;
   int size =  varr.size();
-  int k = size/2;
   int random = (size-1)*rand()/RAND_MAX;
 
   for (int i = 0; i < size; i++) {
     if (varr.at(i).length < varr.at(random).length) {
       left.push_back(varr.at(i));
-    } else {
+    }
+    if (varr.at(i).length > varr.at(random).length){
       right.push_back(varr.at(i));
     }
   }
@@ -20,9 +20,9 @@ projectNode find_median(vector<projectNode> varr) {
   if (left.size() == k-1) {
     median = varr.at(random);
   } else if (left.size() >= k) {
-    median = find_median(left);
+    median = find_median(left, k);
   } else {
-    median = find_median(right);
+    median = find_median(right, k-1-left.size());
   }
   return median;
 }
@@ -31,10 +31,8 @@ projectNode find_median(vector<projectNode> varr) {
 candidate find_closest(vector<projectNode> varr) {
     int size = varr.size();
     candidate subCandidate;
-    projectNode median = find_median(varr);
-    vector<projectNode> left, right;
-    candidate left_dis, right_dis, left_min;
     if (size == 1) {
+        subCandidate.pointPair = make_pair(0, 0);
         subCandidate.length = 100000;
         return subCandidate;
     }
@@ -43,10 +41,13 @@ candidate find_closest(vector<projectNode> varr) {
         subCandidate.length = fabs(varr.at(0).length-varr.at(1).length);
         return subCandidate;
     }
+    projectNode median = find_median(varr, varr.size()/2+1);
+    vector<projectNode> left, right;
+    candidate left_dis, right_dis, left_min;
     for (int i = 0; i < varr.size(); i++) {
         if (varr.at(i).length < median.length) {
             left.push_back(varr.at(i));
-            if (left.size()== 1) {
+            if (left.size() == 1) {
                 left_min.length = varr.at(i).length-median.length;
                 left_min.pointPair = make_pair(varr.at(i).imageNum, median.imageNum);
             }
@@ -58,7 +59,6 @@ candidate find_closest(vector<projectNode> varr) {
             right.push_back(varr.at(i));
         }
     }
-
     left_dis = find_closest(left);
     right_dis = find_closest(right);
 
