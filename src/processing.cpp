@@ -130,10 +130,31 @@ void projection() {
             for (int k = 0; k < 784; k++)
                 projectVector[j][i].length += (double)images[i][k] * projectData[j][k];
         }
-    // free(images);
 }
 
-candidate preProcessing() {
+void showImage(int first, int second) {
+  for (int i = 0; i < 28; i++) {
+    for (int j = 0; j < 28; j++) {
+      if (images[first][i * 28 + j] > 100)
+        printf("  ");
+      else
+        printf("* ");
+    }
+    printf("\n");
+  }
+  printf("\n");
+  for (int i = 0; i < 28; i++) {
+    for (int j = 0; j < 28; j++) {
+      if (images[second][i * 28 + j] > 100)
+        printf("  ");
+      else
+        printf("* ");
+    }
+    printf("\n");
+  }
+}
+
+void processing() {
     clock_t start = clock();
     printf("==================== Pre-processing ====================\n");
     if (readFromDataset() == 0) {
@@ -144,11 +165,23 @@ candidate preProcessing() {
     projection();
 
     double end = (double)(clock() - start) / (double)CLOCKS_PER_SEC;
-    printf("\n[Pre-processing tie: %lf seconds]\n\n", end);
+    printf("\n[Pre-processing time: %lf seconds]\n\n", end);
 
     start = clock();
     printf("================= Finding Closest-pair =================\n");
     candidate closest;
     closest = closest_pair(projectVector, images);
-    return closest;
+    Pair closestPair = closest.pointPair;
+    printf("The closest Pair in this dateset is: ");
+    if (closestPair.first > closestPair.second)
+      printf("%d and %d\n", closestPair.second, closestPair.first);
+    else
+      printf("%d and %d\n", closestPair.first, closestPair.second);
+    printf("The distance between these two points is %lf\n", closest.length);
+    printf("These are the two pictures: \n\n");
+
+    showImage(closestPair.first, closestPair.second);
+
+    end = (double)(clock() - start) / (double)CLOCKS_PER_SEC;
+    printf("\n[Pre-processing time: %lf seconds]\n\n", end);
 }

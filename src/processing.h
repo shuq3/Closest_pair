@@ -13,6 +13,6 @@ void normalize(double* data, int count);
 void geneRandProjVects();
 void projection();
 
-candidate preProcessing();
+void processing();
 
 #endif

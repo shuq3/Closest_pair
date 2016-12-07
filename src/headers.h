@@ -6,6 +6,7 @@
 #include <stdlib.h>
 #include <math.h>
 #include <time.h>
+#include <limits.h>
 
 // C++ headers
 #include <iostream>
@@ -20,7 +21,7 @@ using namespace std;
  #include <sys/types.h>
 
 // self-defined headers
-#include "pre_processing.h"
+#include "processing.h"
 #include "closest_pair.h"
 
 #endif

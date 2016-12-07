@@ -71,12 +71,12 @@ candidate find_closest(vector<projectNode> varr) {
     }
 }
 
-candidate closest_pair(projectNode (*projectVector)[60000] , int (*images)[784]) {
-    double min = 99999;
+candidate closest_pair(projectNode (*projectVector)[60000], int (*images)[784]) {
+    double min = INT_MAX;
     candidate counter[100];
-    Pair tempCloest;
-    for (int i = 0; i < 100; i ++) {
-        vector<projectNode> varr(projectVector[i], projectVector[i]+60000);
+    Pair tempClosest;
+    for (int i = 0; i < 100; i++) {
+        vector<projectNode> varr(projectVector[i], projectVector[i] + 60000);
         counter[i] = find_closest(varr);
         // compute the Euclidean distance for i candidate
         int first = counter[i].pointPair.first;
@@ -87,13 +87,13 @@ candidate closest_pair(projectNode (*projectVector)[60000] , int (*images)[784])
         }
         length = sqrt(length);
         // update the closest pair
-        if (length <  min) {
+        if (length < min) {
             min = length;
-            tempCloest = counter[i].pointPair;
+            tempClosest = counter[i].pointPair;
         }
     }
     candidate result;
-    result.pointPair = tempCloest;
+    result.pointPair = tempClosest;
     result.length = min;
     return result;
 }
