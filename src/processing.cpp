@@ -171,9 +171,9 @@ void processing() {
     printf("================= Finding Closest-pair =================\n");
     for (int i = 0; i < 2; i++) {
         if (i == 0)
-            printf("\n[Using median to find the closest pair]\n");
+            printf("\nUsing median to find the closest pair...\n");
         if (i == 1)
-            printf("\n[Using random pivot to find the closest pair]\n");
+            printf("\nUsing random pivot to find the closest pair...\n");
         candidate closest;
         closest = closest_pair(projectVector, images, i);
         Pair closestPair = closest.pointPair;
