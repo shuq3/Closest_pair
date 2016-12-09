@@ -169,19 +169,25 @@ void processing() {
 
     start = clock();
     printf("================= Finding Closest-pair =================\n");
-    candidate closest;
-    closest = closest_pair(projectVector, images);
-    Pair closestPair = closest.pointPair;
-    printf("The closest Pair in this dateset is: ");
-    if (closestPair.first > closestPair.second)
-      printf("%d and %d\n", closestPair.second, closestPair.first);
-    else
-      printf("%d and %d\n", closestPair.first, closestPair.second);
-    printf("The distance between these two points is %lf\n", closest.length);
-    printf("These are the two pictures: \n\n");
+    for (int i = 0; i < 2; i++) {
+        if (i == 0)
+            printf("\n[Using median to find the closest pair]\n");
+        if (i == 1)
+            printf("\n[Using random pivot to find the closest pair]\n");
+        candidate closest;
+        closest = closest_pair(projectVector, images, i);
+        Pair closestPair = closest.pointPair;
+        printf("The closest Pair in this dateset is: ");
+        if (closestPair.first > closestPair.second)
+          printf("%d and %d\n", closestPair.second, closestPair.first);
+        else
+          printf("%d and %d\n", closestPair.first, closestPair.second);
+        printf("The distance between these two points is %lf\n", closest.length);
+        printf("These are the two pictures: \n\n");
 
-    showImage(closestPair.first, closestPair.second);
+        showImage(closestPair.first, closestPair.second);
 
-    end = (double)(clock() - start) / (double)CLOCKS_PER_SEC;
-    printf("\n[Pre-processing time: %lf seconds]\n\n", end);
+        end = (double)(clock() - start) / (double)CLOCKS_PER_SEC;
+        printf("\n[Finding time: %lf seconds]\n\n", end);
+    }
 }
